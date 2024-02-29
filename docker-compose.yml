@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: banking_postgres
+    ports:
+      - "4321:5432"
+    environment:
+      POSTGRES_USER: ht
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: banking_app
+    volumes:
+      - sample_banking_pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  sample_banking_pg_data:

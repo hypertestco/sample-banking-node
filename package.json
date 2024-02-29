@@ -1,0 +1,15 @@
+{
+  "name": "sample-banking-demo-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "all-start:debug": "pnpm recursive run --workspace-concurrency 400 --stream=true start:debug"
+  },
+  "workspaces": [
+    "packages/graphql-banking-app-demo"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
