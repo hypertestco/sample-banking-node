@@ -20,15 +20,15 @@ const data = {
     }),
     managerApproval: ({ customerId, newAddress = '' }) => ({
         customerId,
-        approve: Math.random() > 0 ? true : false,
+        approve: Math.random() > 0.7 ? true : false,
     }),
     complianceApproval: ({ customerId }) => ({
         customerId,
-        approve: Math.random() > 0 ? true : false,
+        approve: Math.random() > 0.7 ? true : false,
     }),
     createAccount: ({ customerId }) => ({
         customerId,
-        initialDeposit: Math.random() > 0 ? faker.number.int({ min: 10001, max: 1000000 }) : faker.number.int({ min: 0, max: 9999 }),
+        initialDeposit: Math.random() > 0.7 ? faker.number.int({ min: 10001, max: 1000000 }) : faker.number.int({ min: 0, max: 9999 }),
         minimumBalance: faker.number.int({ min: 0, max: 100000 })
     }),
     transaction: ({ accountId }) => ({

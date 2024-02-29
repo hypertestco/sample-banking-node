@@ -1,8 +1,10 @@
-// const { GraphQlError } = require('@apollo/server');
+const { GraphQLError } = require('graphql');
+const htSdk = require('@hypertestco/node-sdk');
 const axios = require('axios');
 const pg = require('pg');
 
 const { Pool } = pg;
+const Date = htSdk.HtDate;
 // PostgreSQL connection
 const pool = new Pool({
   user: 'ht',
@@ -20,7 +22,7 @@ const resolvers = {
         dollarCoversionTest: async (parent, args, context, info) => {
             // throw new Error('Invalid amount');
 
-            try {
+
                 let amount = Number(args.amount);
                 if (isNaN(amount) || amount <= 0) {
                   throw new Error('Invalid amount');
@@ -42,12 +44,6 @@ const resolvers = {
                 }
 
                 return returnObj;
-              }
-
-              catch (error) {
-                console.log(error);
-                return { error: error.message };
-              }
         },
         statement: async (parent, args, context, info) => {
             try {
@@ -81,7 +77,7 @@ const resolvers = {
       onboardCustomer: async (parent, args, context, info) => {
         const { name, address, mobile } = args;
         if (name.length < 3 || address.length < 5 || mobile.length < 10) {
-          throw new Error('please fill required field correctly')
+          throw new GraphQlError('please fill required field correctly')
         }
         const mobileCheck = await pool.query('SELECT * FROM customers WHERE mobile = $1', [mobile]);
         if (mobileCheck.rowCount > 0) {
