@@ -104,7 +104,9 @@ async function sampleFlow() {
             status
           }
         }`
-        const managerApprovalQueryResult = await graphqlRequest.request(managerApprovalQuery, data.managerApproval({ customerId: newCustomerId }));
+        const managerApprovalArgs = data.managerApproval({ customerId: newCustomerId });
+        console.log('manager args',JSON.stringify(managerApprovalArgs))
+        const managerApprovalQueryResult = await graphqlRequest.request(managerApprovalQuery, managerApprovalArgs);
         console.log({managerApprovalQueryResult});
 
         const complianceApprovalQuery = gql`
@@ -113,7 +115,9 @@ async function sampleFlow() {
             status
           }
         }`
-        const complianceApprovalQueryResult = await graphqlRequest.request(complianceApprovalQuery, data.complianceApproval({ customerId: newCustomerId }));
+        const complianceArgs = data.complianceApproval({ customerId: newCustomerId });
+        console.log('compliance args',JSON.stringify(complianceArgs))
+        const complianceApprovalQueryResult = await graphqlRequest.request(complianceApprovalQuery, complianceArgs);
         console.log({complianceApprovalQueryResult});
 
         const createAccountQuery = gql`
