@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
 const path = require('path');
-const creds = require('../../creds');
+const creds = require('./creds');
 
 const requestTypes = {
     HTTP: 'HTTP',
@@ -16,7 +16,7 @@ module.exports = {
     graphqlCandidateUrl: 'http://localhost:3000/graphql', // GraphQL URL of App under test (Optional)
     appStartCommand: 'node', // Command to start the app (Required)
     appStartCommandArgs: ['index.js'], // App start command arguments (Required)
-    appWorkingDirectory: path.resolve(__dirname), // Working directory for the app (default: current working dir) (Optional)
+    appWorkingDirectory: path.resolve(__dirname, './packages/graphql-banking-app-demo'), // Working directory for the app (default: current working dir) (Optional)
     appStartTimeoutSec: 10, // Timeout for the start command (default: 10) (Optional)
     showAppLogs: true, // Whether to show app logs (default: false) (Optional)
     shouldReportHeaderDiffs: false, // Whether to report differences in headers (default: false) (Optional)

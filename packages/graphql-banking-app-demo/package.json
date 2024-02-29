@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run dbSeed && kill-port 12300 && HT_MODE=RECORD DEBUG=ht* node index.js",
     "dbSeed": "node dbSeed.js",
-    "run-test": "htcli start-new-test --config-file-path .htConf.js",
+    "run-test": "htcli start-new-test --config-file-path ../../.htConf.js",
     "run-test-cov": "nyc npm run run-test",
     "simulate-traffic": "node simulateTraffic.js",
     "htcli-v": "htcli -v"
