@@ -4,10 +4,12 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "all-start:debug": "pnpm recursive run --workspace-concurrency 400 --stream=true start:debug"
+    "all-start": "pnpm recursive run --workspace-concurrency 400 --stream=true start",
+    "all-simulate-traffic": "pnpm recursive run --workspace-concurrency 400  --stream=true simulate-traffic"
   },
   "workspaces": [
-    "packages/graphql-banking-app-demo"
+    "packages/graphql-banking-app-demo",
+    "packages/http-banking-app-demo"
   ],
   "keywords": [],
   "author": "",

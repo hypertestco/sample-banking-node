@@ -175,7 +175,7 @@ async function sampleFlow() {
     }
 }
 
-const iterations = 100;
+const iterations = 10;
 
 async function start() {
     console.log(`traffic simulation started. Will exit after ${iterations} iterations`);

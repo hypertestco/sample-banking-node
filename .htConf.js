@@ -12,11 +12,11 @@ module.exports = {
     htCliRefreshToken: creds.htCliRefreshToken,
     serviceIdentifier: creds.serviceIdentifer,
     requestTypesToTest: [requestTypes.GRAPHQL], // What kind of requests to include in the test
-    // httpCandidateUrl: 'http://localhost:12300', // HTTP URL of App under test (Optional)
-    graphqlCandidateUrl: 'http://localhost:3000/graphql', // GraphQL URL of App under test (Optional)
+    // httpCandidateUrl: creds.httpBaseUrl, // HTTP URL of App under test (Optional)
+    graphqlCandidateUrl: creds.graphqlAppUrl, // GraphQL URL of App under test (Optional)
     appStartCommand: 'node', // Command to start the app (Required)
     appStartCommandArgs: ['index.js'], // App start command arguments (Required)
-    appWorkingDirectory: path.resolve(__dirname, './packages/graphql-banking-app-demo'), // Working directory for the app (default: current working dir) (Optional)
+    appWorkingDirectory: path.resolve(__dirname, creds.graphqlPackagePath), // Working directory for the app (default: current working dir) (Optional)
     appStartTimeoutSec: 10, // Timeout for the start command (default: 10) (Optional)
     showAppLogs: true, // Whether to show app logs (default: false) (Optional)
     shouldReportHeaderDiffs: false, // Whether to report differences in headers (default: false) (Optional)

@@ -40,9 +40,55 @@ importers:
       fastify:
         specifier: ^4.13.0
         version: 4.26.1
+      graphql:
+        specifier: ^16.8.1
+        version: 16.8.1
       graphql-request:
         specifier: ^6.1.0
         version: 6.1.0(graphql@16.8.1)
+      pg:
+        specifier: ^8.11.3
+        version: 8.11.3
+    devDependencies:
+      '@hypertestco/ht-cli':
+        specifier: /home/shreesha/v2/autoqa_v2/packages/ht-cli/dist
+        version: link:../../../v2/autoqa_v2/packages/ht-cli/dist
+      kill-port:
+        specifier: ^2.0.1
+        version: 2.0.1
+      nodemon:
+        specifier: ^3.0.1
+        version: 3.1.0
+      nyc:
+        specifier: ^15.1.0
+        version: 15.1.0
+
+  packages/http-banking-app-demo:
+    dependencies:
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
+      '@hypertestco/node-sdk':
+        specifier: /home/shreesha/v2/autoqa_v2/packages/node-sdk/dist
+        version: link:../../../v2/autoqa_v2/packages/node-sdk/dist
+      '@opentelemetry/exporter-trace-otlp-grpc':
+        specifier: ^0.45.1
+        version: 0.45.1(@opentelemetry/api@1.7.0)
+      '@opentelemetry/resources':
+        specifier: ^1.18.1
+        version: 1.21.0(@opentelemetry/api@1.7.0)
+      '@opentelemetry/sdk-node':
+        specifier: ^0.45.1
+        version: 0.45.1(@opentelemetry/api@1.7.0)
+      '@opentelemetry/semantic-conventions':
+        specifier: ^1.18.1
+        version: 1.21.0
+      axios:
+        specifier: ^1.6.2
+        version: 1.6.7
+      fastify:
+        specifier: ^4.24.3
+        version: 4.26.1
       pg:
         specifier: ^8.11.3
         version: 8.11.3
