@@ -8,8 +8,7 @@
     "all-simulate-traffic": "pnpm recursive run --workspace-concurrency 400  --stream=true simulate-traffic"
   },
   "workspaces": [
-    "packages/graphql-banking-app-demo",
-    "packages/http-banking-app-demo"
+    "packages/*"
   ],
   "keywords": [],
   "author": "",

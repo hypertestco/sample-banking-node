@@ -47,53 +47,9 @@ const createTables = async () => {
   }
 };
 
-const seedData = async () => {
-  const client = await pool.connect();
-  try {
-    // Check if customers already exist
-    const customers = await client.query('SELECT * FROM customers');
-    if (customers.rowCount === 0) {
-      // Insert sample customer data
-      await client.query(`
-        INSERT INTO customers (name, address, mobile, manager_approval, compliance_approval)
-        VALUES 
-        ('John Doe', '123 Main St', '555-1234', true, false),
-        ('Jane Smith', '456 Elm St', '555-5678', true, true);
-      `);
-    }
-
-    // Check if accounts already exist
-    const accounts = await client.query('SELECT * FROM accounts');
-    if (accounts.rowCount === 0) {
-      // Insert sample account data
-      await client.query(`
-        INSERT INTO accounts (customer_id, current_balance, minimum_balance)
-        VALUES 
-        (1, 10000, 1000),
-        (2, 20000, 1000);
-      `);
-    }
-
-    // Check if transactions already exist
-    const transactions = await client.query('SELECT * FROM transactions');
-    if (transactions.rowCount === 0) {
-      // Insert sample transaction data
-      await client.query(`
-        INSERT INTO transactions (account_id, amount, transaction_type)
-        VALUES 
-        (1, 1000, 'credit'),
-        (2, -500, 'debit');
-      `);
-    }
-  } finally {
-    client.release();
-  }
-};
-
 const main = async () => {
   try {
     await createTables();
-    // await seedData();
     console.log('Database seeding completed successfully.');
   } catch (err) {
     console.error('Error during database seeding:', err);
