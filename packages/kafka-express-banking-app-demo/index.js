@@ -106,7 +106,7 @@ const consumeCustomerEventsFromKafka = async () => {
       switch (eventData.eventType) {
         case 'statement':
           const { accountId: requestStatementAccountId } = data;
-          // bug - 6
+          // bug - 3
           // change requestStatementAccountId to 123456 -  non-existent
           const balance = await pool.query('select current_balance from accounts where id = $1', [requestStatementAccountId]);
           const transaction = await pool.query('select * from transactions where account_id = $1', [requestStatementAccountId]);
