@@ -1,4 +1,3 @@
-
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 
 const htSdk = require('@hypertestco/node-sdk');
@@ -67,7 +66,6 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 const consumer = kafka.consumer({ groupId: 'customer-group' });
 const consumer2 = kafka.consumer({ groupId: 'statement-group' });
-const callbacks = new Map();
 
 const pool = new Pool({
   user: 'ht',
