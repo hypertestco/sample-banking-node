@@ -7,7 +7,8 @@
     "dbSeed": "docker compose up -d && node dbSeed.js",
     "simulate-traffic": "node simulateTraffic.js",
     "run-test": "htcli start-new-test --config-file-path .htConf.js",
-    "run-test-cov" : "nyc npm run run-test",
+    "run-test-cov": "nyc npm run run-test",
+    "run-test-cov-html": "nyc --reporter html npm run run-test",
     "htcli-v": "htcli -v"
   },
   "keywords": [],
@@ -15,19 +16,18 @@
   "license": "",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
-    "@hypertestco/node-sdk": "0.2.5-alpha.6",
+    "@hypertestco/node-sdk": "0.2.15-9",
     "@opentelemetry/exporter-trace-otlp-grpc": "^0.45.1",
-    "@opentelemetry/resources": "^1.18.1",
     "@opentelemetry/sdk-node": "^0.45.1",
-    "@opentelemetry/semantic-conventions": "^1.18.1",
     "axios": "^1.6.2",
     "fastify": "^4.24.3",
     "pg": "^8.11.3"
   },
   "devDependencies": {
-    "@hypertestco/ht-cli": "0.2.5-alpha.6",
+    "@hypertestco/ht-cli": "0.2.15-9",
+    "nyc": "^15.1.0",
     "kill-port": "^2.0.1",
-    "nodemon": "^3.0.1",
-    "nyc": "^15.1.0"
+    "nodemon": "^3.0.1"
+
   }
 }
