@@ -1,50 +1,38 @@
-
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 
+// @ts-expect-error ht
 const htSdk = require('@hypertestco/node-sdk');
 const Date = htSdk.HtDate; // if you want to mock system time
 
-/* -- DELETE befpre pushing to git -- */
-const localServiceId = 'e700b4bd-7395-4217-988e-8bc4cc3bcfb6';
-const remoteServiceId = '8e950615-2d5f-4e64-ac10-62d972e82c80'
 const creds = require('./creds');
 const serviceId = creds.serviceIdentifer; //process.env.HT_SERVICE_ID; // set service id here
 
-/* istanbul ignore next */
+// istanbul ignore next
 if (!serviceId) {
   throw new Error('Please set service id');
 }
 
+console.log({ serviceId });
 htSdk.initialize({ apiKey: 'DEMO-API-KEY', serviceId });
 
 
 const opentelemetry = require('@opentelemetry/sdk-node');
-const { Resource } = require('@opentelemetry/resources');
-const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
 const {
   OTLPTraceExporter,
 } = require('@opentelemetry/exporter-trace-otlp-grpc');
 
-// Define your resource
-const resource = new Resource({
-  [SemanticResourceAttributes.SERVICE_NAME]: 'sample-banking-app-node',
-  [SemanticResourceAttributes.SERVICE_VERSION]: '1.0.1',
-});
+const HtTraceExporter = htSdk.getHtTraceExporter(OTLPTraceExporter);
 
 const sdk = new opentelemetry.NodeSDK({
-  resource,
-  traceExporter: new OTLPTraceExporter({
-    // url: "http://localhost:4317",
-    // url: 'http://localhost:3008',
+  serviceName: 'sample-banking-app-node',
+  traceExporter: new HtTraceExporter({
     url: creds.loggerUrl,
   }),
-  instrumentations: [],
 });
 
 sdk.start();
-
-htSdk.autoInstrumentation();
 htSdk.setHtTracerProvider(sdk._tracerProvider);
+
 
 const axios = require('axios');
 const fastify = require('fastify')({ logger: true });
@@ -287,8 +275,11 @@ fastify.get('/dollar-coversion-test', async (request, reply) => {
 // Start server
 const start = async () => {
   try {
+    
     await fastify.listen({ port: 12300, host: 'localhost' });
+    
     htSdk.markAppAsReady();
+    
     fastify.log.info(`Server listening on ${fastify.server.address().port}`);
   } catch (err) /* istanbul ignore next */ {
     fastify.log.error(err);
@@ -296,4 +287,9 @@ const start = async () => {
   }
 };
 
-start();
+
+(async () => {
+  await start();
+})();
+
+
