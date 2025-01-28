@@ -14,7 +14,7 @@ Demo app for previewing app for hypertest node sdk
 - Run `npm install`
 
 ## Initialization
-- Start the app. run `npm run start`
+- Start the app. run `npm run start`. This will spawn all three services in separate processes.
 - Simulate traffic by running `npm run simulate-traffic`. You can also send http traffic manually using curl/postman etc
 
 ## Test execution
