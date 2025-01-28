@@ -3,7 +3,7 @@ process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 const htSdk = require('@hypertestco/node-sdk');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
-  serviceId: '14a173d2-289c-4324-88f7-ad99eee6e4cf',
+  serviceId: require('../service-identifiers').bankingService,
   serviceName: 'demo-banking-service-node',
   exporterUrl: 'https://logger.demo.hypertest.co',
 });
