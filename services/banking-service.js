@@ -80,7 +80,12 @@ fastify.put('/banking/update-customer-address', async (request, reply) => {
 
 // Manager approval
 fastify.post('/banking/request-approval', async (request, reply) => {
-  const { data } = await approvalServiceClient.post(`/approval/approve/${request.body.customerId}`, {});
+  // correct implementation
+  let { customerId } = request.body;
+
+  // bug 2 - harcoding the customer id accidentally
+  // customerId = 0;
+  const { data } = await approvalServiceClient.post(`/approval/approve/${customerId}`, {});
   return data;
 });
 
