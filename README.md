@@ -7,13 +7,10 @@ Demo app for previewing app for hypertest node sdk
 
 ## Installation
 - Clone the repo
-- Obtain credentials from hypertest team (email, password, npm_token, service_identifier, things to set in creds.js)
-- Log into hypertest dashboard using the email and password provided.
-- Select/create a new service. note its identifier (it would be a uuid)
-- Select/create a cli token from the UI, (click on profile icon on the top-left on the screen)
-- Create .npmrc from .npmrc.example and update npm_token
-- Create .htConf.js from .htConf.js.example
-- Update values in `cred.js`
+- Create an account on hypertest. (https://hypertest.co)
+- Log into hypertest dashboard using sso here (https://demo.hypertest.co).
+- Select/create 3 services - one each for banking-service, approval-service and consumer. note the identifiers (it would be a uuid)
+- populate service-identifiers.js file with the above identifiers
 - Run `npm install`
 
 ## Initialization
@@ -21,9 +18,11 @@ Demo app for previewing app for hypertest node sdk
 - Simulate traffic by running `npm run simulate-traffic`. You can also send http traffic manually using curl/postman etc
 
 ## Test execution
-- Run `npm run run-test`
+- Run `npm run test-cov:banking`
+- Run `npm run test-cov:approval`
+- Run `npm run test-cov:consumer`
+
 - Test results would be available on cli and dashboard
 
 ## Coverage reports
-- Run `npm run run-test-cov`
 - Coverage report would be present in coverage directory
