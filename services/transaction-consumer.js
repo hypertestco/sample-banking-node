@@ -9,11 +9,6 @@ htSdk.initialize({
 });
 /* hypertest snippet ends */
 
-
-const approvalServiceBaseUrl = 'http://localhost:12301';
-
-const axios = require('axios');
-const fastify = require('fastify')({ logger: false });
 const { Pool } = require('pg');
 
 // PostgreSQL connection
