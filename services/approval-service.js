@@ -9,8 +9,6 @@ htSdk.initialize({
 });
 /* hypertest snippet ends */
 
-
-const axios = require('axios');
 const fastify = require('fastify')({ logger: false });
 const { Pool } = require('pg');
 
