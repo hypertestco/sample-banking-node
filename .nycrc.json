@@ -2,6 +2,8 @@
     "exclude": [],
     "reporter": [
         "html",
-        "text"
-    ]
+        "text",
+        "json-summary"
+    ],
+    "report-dir": "ht-coverage"
 }

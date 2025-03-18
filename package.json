@@ -17,7 +17,10 @@
     "test-cov:banking": "nyc npm run test:banking",
     "test-cov:approval": "nyc npm run test:approval",
     "test-cov:consumer": "nyc npm run test:consumer",
-    "htcli-v": "htcli -v"
+    "htcli-v": "htcli -v",
+    "update-cov:banking": "htcli update-coverage --config-file-path .htConf.banking.js",
+    "update-cov:approval": "htcli update-coverage --config-file-path .htConf.approval.js",
+    "update-cov:consumer": "htcli update-coverage --config-file-path .htConf.consumer.js"
   },
   "keywords": [],
   "author": "",

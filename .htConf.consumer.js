@@ -10,8 +10,8 @@ module.exports = {
   htBackendBaseUrl: 'https://demo.hypertest.co', // HyperTest backend URL (Required)
   serviceIdentifier: serviceIdentifiers.transactionConsumer,
   requestTypesToTest: [requestTypes.AMQP], // What kind of requests to include in the test
-  appStartCommand: 'node', // Command to start the app (Required)
-  appStartCommandArgs: ['./services/transaction-consumer.js'], // App start command arguments (Required)
+  appStartCommand: 'npm', // Command to start the app (Required)
+  appStartCommandArgs: ['run', 'start:consumer'], // App start command arguments (Required)
   appWorkingDirectory: __dirname, // Working directory for the app (default: current working dir) (Optional)
   appStartTimeoutSec: 30, // Timeout for the start command (default: 10) (Optional)
   showAppLogs: true, // Whether to show app logs (default: false) (Optional)
