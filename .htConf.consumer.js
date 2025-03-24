@@ -4,10 +4,10 @@ const requestTypes = {
 };
 
 const serviceIdentifiers = require('./service-identifiers');
-
+const htUrls = require('./htServerUrl');
 
 module.exports = {
-  htBackendBaseUrl: 'https://demo.hypertest.co', // HyperTest backend URL (Required)
+  htBackendBaseUrl: htUrls.backend, // HyperTest backend URL (Required)
   serviceIdentifier: serviceIdentifiers.transactionConsumer,
   requestTypesToTest: [requestTypes.AMQP], // What kind of requests to include in the test
   appStartCommand: 'npm', // Command to start the app (Required)

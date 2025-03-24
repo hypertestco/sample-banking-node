@@ -4,10 +4,10 @@ const requestTypes = {
 };
 
 const serviceIdentifiers = require('./service-identifiers');
-
+const htUrls = require('./htServerUrl');
 
 module.exports = {
-  htBackendBaseUrl: 'https://demo.hypertest.co', // HyperTest backend URL (Required)
+  htBackendBaseUrl: htUrls.backend, // HyperTest backend URL (Required)
   serviceIdentifier: serviceIdentifiers.bankingService,
   requestTypesToTest: [requestTypes.HTTP], // What kind of requests to include in the test
   httpCandidateUrl: 'http://localhost:12300', // HTTP URL of App under test (Optional)
