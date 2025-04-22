@@ -4,3 +4,6 @@ node_modules
 coverage
 .npmrc
 .htConf.js
+.nyc_output
+coverage
+ht-coverage

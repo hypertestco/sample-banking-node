@@ -5,7 +5,7 @@ htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').transactionConsumer,
   serviceName: 'demo-banking-consumer',
-  exporterUrl: 'https://logger.demo.hypertest.co',
+  exporterUrl: require('../htServerUrl').logger,
 });
 /* hypertest snippet ends */
 
