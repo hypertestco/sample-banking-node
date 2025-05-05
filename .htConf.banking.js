@@ -23,7 +23,8 @@ module.exports = {
   htExtraHeaders: {  // Object containing additional headers for HyperTest server requests (Optional)
     // authorization: creds.authHeader,
   },
-  shouldCaptureTestRequestCoverage: false
+  shouldCaptureTestRequestCoverage: false,
+  masterBranch: 'test1'
 };
 
 // 581, 573, 577, 580
