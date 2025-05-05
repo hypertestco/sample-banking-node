@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "pre-start": "npm run dbSeed && kill-port 12300 12301",
-    "start:banking": "kill-port 12300 && node ./services/banking-service.js",
+    "start:banking": "kill-port 12300 && nyc node ./services/banking-service.js",
     "start:approval": "kill-port 12301 && node ./services/approval-service.js",
     "start:consumer": "node ./services/transaction-consumer.js",
     "start-all": "cross-env HT_MODE=RECORD run-p start:*",
@@ -28,14 +28,14 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "@faker-js/faker": "^8.4.1",
-    "@hypertestco/node-sdk": "0.2.26",
+    "@hypertestco/node-sdk": "/home/vineet/autoqa_v2/packages/node-sdk/dist/hypertestco-node-sdk-0.2.28-33.tgz",
     "amqplib": "^0.10.5",
     "axios": "^1.6.2",
     "fastify": "^4.24.3",
     "pg": "^8.11.3"
   },
   "devDependencies": {
-    "@hypertestco/ht-cli": "0.2.26",
+    "@hypertestco/ht-cli": "/home/vineet/autoqa_v2/packages/ht-cli/dist/hypertestco-ht-cli-0.2.28-33.tgz",
     "kill-port": "1.6.1",
     "wait-port": "^1.1.0",
     "nodemon": "^3.0.1",

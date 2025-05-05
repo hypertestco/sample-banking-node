@@ -1,11 +1,26 @@
 /* hypertest snippet starts */
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 const htSdk = require('@hypertestco/node-sdk');
+
+htSdk.hooks.httpServer.request.v1({
+  beforeRecord({ readableInput, inputMeta, userMeta }) {
+    userMeta.isHookCalled = true;
+    return { readableInput, inputMeta, userMeta };
+  },
+  beforeReplay({ readableInput, inputMeta, userMeta }) {
+    if (userMeta.isHookCalled) {
+      console.log('Replay hook called for http server...');
+    }
+
+    return { readableInput, inputMeta, userMeta };
+  },
+});
+
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').bankingService,
   serviceName: 'demo-banking-service-node',
-  exporterUrl: 'https://logger.demo.hypertest.co',
+  exporterUrl: 'http://localhost:4317',
 });
 /* hypertest snippet ends */
 
@@ -36,9 +51,37 @@ const pool = new Pool({
 // amqp channel
 let channel;
 
+const REQUEST_CATCHER_URL = 'https://sawan.requestcatcher.com';
+
+fastify.get('/test/subsets', async (request, reply) => {
+  console.log('common lines');
+  console.log('common lines');
+  console.log('common lines');
+  console.log('common lines');
+
+  if (request.query.subset === '1' || request.query.subset === '2') {
+    console.log('specific to subset 1 and 2')
+    console.log('specific to subset 1 and 2')
+    console.log('specific to subset 1 and 2')
+    console.log('specific to subset 1 and 2')
+    await axios.get(`${REQUEST_CATCHER_URL}/subset1And2`);
+  }
+
+  if (request.query.subset === '2') {
+    console.log('specific to subset 2');
+    console.log('specific to subset 2');
+    console.log('specific to subset 2');
+    console.log('specific to subset 2');
+    await axios.get(`${REQUEST_CATCHER_URL}/subset2`);
+  }
+
+  reply.send();
+});
+
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
   const { name, address, mobile } = request.body;
+  console.log('here');
   if (name.length < 3 || address.length < 5 || mobile.length < 10) {
     throw new Error('please fill required field correctly')
   }
@@ -210,11 +253,14 @@ const start = async () => {
     channel = await connection.createChannel();
     await channel.assertQueue(QUEUE_NAME, { durable: true });
     await fastify.listen({ port: 12300, host: 'localhost' });
+    console.log('before')
     /* hypertest snippet starts */
     htSdk.markAppAsReady();
     /* hypertest snippet ends */
+    console.log('after')
     fastify.log.info(`Server listening on ${fastify.server.address().port}`);
   } catch (err) /* istanbul ignore next */ {
+    console.log(err);
     fastify.log.error(err);
     process.exit(1);
   }

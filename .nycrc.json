@@ -1,5 +1,8 @@
 {
-    "exclude": [],
+    "exclude": [
+        "ht-cli-dist",
+        "node-sdk-dist"
+    ],
     "reporter": [
         "html",
         "text",
