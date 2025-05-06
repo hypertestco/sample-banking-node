@@ -2,19 +2,19 @@
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 const htSdk = require('@hypertestco/node-sdk');
 
-htSdk.hooks.httpServer.request.v1({
-  beforeRecord({ readableInput, inputMeta, userMeta }) {
-    userMeta.isHookCalled = true;
-    return { readableInput, inputMeta, userMeta };
-  },
-  beforeReplay({ readableInput, inputMeta, userMeta }) {
-    if (userMeta.isHookCalled) {
-      console.log('Replay hook called for http server...');
-    }
+// htSdk.hooks.httpServer.request.v1({
+//   beforeRecord({ readableInput, inputMeta, userMeta }) {
+//     userMeta.isHookCalled = true;
+//     return { readableInput, inputMeta, userMeta };
+//   },
+//   beforeReplay({ readableInput, inputMeta, userMeta }) {
+//     if (userMeta.isHookCalled) {
+//       console.log('Replay hook called for http server...');
+//     }
 
-    return { readableInput, inputMeta, userMeta };
-  },
-});
+//     return { readableInput, inputMeta, userMeta };
+//   },
+// });
 
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',

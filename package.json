@@ -28,14 +28,14 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "@faker-js/faker": "^8.4.1",
-    "@hypertestco/node-sdk": "/home/vineet/autoqa_v2/packages/node-sdk/dist/hypertestco-node-sdk-0.2.28-33.tgz",
+    "@hypertestco/node-sdk": "0.2.28-7",
     "amqplib": "^0.10.5",
     "axios": "^1.6.2",
     "fastify": "^4.24.3",
     "pg": "^8.11.3"
   },
   "devDependencies": {
-    "@hypertestco/ht-cli": "/home/vineet/autoqa_v2/packages/ht-cli/dist/hypertestco-ht-cli-0.2.28-33.tgz",
+    "@hypertestco/ht-cli": "0.2.28-7",
     "kill-port": "1.6.1",
     "wait-port": "^1.1.0",
     "nodemon": "^3.0.1",
