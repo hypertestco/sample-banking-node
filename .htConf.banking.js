@@ -24,7 +24,7 @@ module.exports = {
     // authorization: creds.authHeader,
   },
   shouldCaptureTestRequestCoverage: false,
-  masterBranch: 'test1'
+  masterBranch: 'main'
 };
 
 // 581, 573, 577, 580
