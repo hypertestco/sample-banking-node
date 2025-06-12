@@ -117,7 +117,9 @@ fastify.post('/banking/create-account', async (request, reply) => {
 
 // Transaction
 fastify.post('/banking/transaction-async', async (request, reply) => {
-  let { accountId, amount } = request.body;
+  const { accountId, amount } = request.body;
+  const transactionType = amount <= 0 ? 'credit' : 'debit';
+  
   const accountQuery = await pool.query('SELECT * FROM accounts WHERE id = $1', [accountId]);
   if (accountQuery.rowCount === 0) {
     throw new Error('Account not found');
@@ -127,9 +129,7 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
   if(amount === 0) {
     throw new Error('Amount cannot be zero');
   }
-
-  let transactionType = amount >= 0 ? 'credit' : 'debit';
-
+  
   const message = {
     accountId,
     amount: Math.abs(amount),
