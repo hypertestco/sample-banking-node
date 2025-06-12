@@ -129,9 +129,7 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
   if(amount === 0) {
     throw new Error('Amount cannot be zero');
   }
-
-
-
+  
   const message = {
     accountId,
     amount: Math.abs(amount),
