@@ -128,11 +128,7 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
     throw new Error('Amount cannot be zero');
   }
 
-  // CORRECT IMPLEMETATATION
   let transactionType = amount >= 0 ? 'credit' : 'debit';
-
-  // bug 1 - transactionType reversed
-  // transactionType = amount < 0 ? 'credit' : 'debit';
 
   const message = {
     accountId,
