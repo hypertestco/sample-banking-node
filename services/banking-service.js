@@ -2,7 +2,7 @@
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
 const htSdk = require('@hypertestco/node-sdk');
 htSdk.initialize({
-  apiKey: 'DEMO-API-KEY',
+  apiKey: '827632acdb53ebab15fedf30eca2d4dba395786d',
   serviceId: require('../service-identifiers').bankingService,
   serviceName: 'demo-banking-service-node',
   exporterUrl: require('../htServerUrl').logger,
@@ -16,7 +16,7 @@ const amqp = require('amqplib');
 const axios = require('axios');
 
 // RabbitMQ connection settings
-const RABBITMQ_URL = 'amqp://localhost:5672';
+const RABBITMQ_URL = 'amqp://localhost:5472';
 const QUEUE_NAME = 'transactionQueue';
 
 
@@ -186,10 +186,12 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
     throw new Error('Invalid amount');
   }
 
+  console.log('Fetching conversion rate from external API');
+
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
   let convertedAmount = amount * coversionRate;
-
+  convertedAmount += 0;
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
 
