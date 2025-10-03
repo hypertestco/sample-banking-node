@@ -16,7 +16,7 @@ const amqp = require('amqplib');
 const axios = require('axios');
 
 // RabbitMQ connection settings
-const RABBITMQ_URL = 'amqp://localhost:5672';
+const RABBITMQ_URL = 'amqp://localhost:5472';
 const QUEUE_NAME = 'transactionQueue';
 
 
@@ -188,6 +188,7 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
 
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
+  console.log('testing conversion rate')
   let convertedAmount = amount * coversionRate;
 
   // bug 5 - return wrong amount
