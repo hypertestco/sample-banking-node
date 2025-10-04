@@ -189,7 +189,7 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
   console.log('testing conversion rate')
-  let convertedAmount = amount * coversionRate;
+  let convertedAmount = (amount * coversionRate) + 5;
 
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
