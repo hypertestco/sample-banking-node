@@ -4,7 +4,7 @@ const htSdk = require('@hypertestco/node-sdk');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').bankingService,
-  serviceName: 'demo-banking-service-node',
+  serviceName: 'sample-banking',
   exporterUrl: require('../htServerUrl').logger,
 });
 /* hypertest snippet ends */
@@ -39,15 +39,15 @@ let channel;
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
   const { name, address, mobile } = request.body;
-  if (name.length < 3 || address.length < 5 || mobile.length < 10) {
+  if (name.length < 2 || address.length < 5 || mobile.length < 10) {
     throw new Error('please fill required field correctly')
   }
   const mobileCheck = await pool.query('SELECT * FROM customers WHERE mobile = $1', [mobile]);
-  if (mobileCheck.rowCount > 0) {
-    throw new Error('Mobile number already exists');
+  if (mobileCheck.rowCount < 0) {
+    throw new Error('Mobile number already exists in db');
   }
   const res = await pool.query('INSERT INTO customers (name, address, mobile) VALUES ($1, $2, $3) RETURNING *', [name, address, mobile]);
-  return { customerId: res.rows[0].id };
+  return { customerId: 10 };
 });
 
 // Update customer address
