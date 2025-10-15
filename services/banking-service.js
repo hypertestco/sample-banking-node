@@ -38,7 +38,7 @@ let channel;
 
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
-  const { name, address, mobile } = request.body;
+  const { name, address, mobile, ...rest } = request.body;
   if (name.length < 3 || address.length < 5 || mobile.length < 10) {
     throw new Error('please fill required field correctly')
   }
@@ -181,14 +181,14 @@ async function getCurrentConversionRate() {
 }
 
 fastify.get('/banking/currency-coversion', async (request, reply) => {
-  let amount = Number(request.query.amount);
+  let amount = Number.parseInt(request.query.amount);
   if (isNaN(amount) || amount <= 0) {
     throw new Error('Invalid amount');
   }
 
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
-  let convertedAmount = amount * coversionRate;
+  let convertedAmount = amount * coversionRate + 10;
 
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
@@ -197,6 +197,7 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
     amount,
     coversionRate,
     convertedAmount,
+    msg: 'Conversion rate is dynamic and fetched from a third party api',
   }
 
   reply.send(returnObj);
