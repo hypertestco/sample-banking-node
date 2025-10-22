@@ -53,7 +53,7 @@ fastify.post('/banking/onboard-customer', async (request, reply) => {
 // Update customer address
 fastify.put('/banking/update-customer-address', async (request, reply) => {
   const { address, customerId } = request.body;
-  const oldAddressFetch = await pool.query('select address from customers WHERE id = $1', [customerId]);
+  const oldAddressFetch = await pool.query('select * from customers WHERE id = $1', [customerId]);
   if (oldAddressFetch.rowCount === 0) {
     reply.status(404).send({
       status: 'failed',
@@ -85,14 +85,14 @@ fastify.post('/banking/request-approval', async (request, reply) => {
 
   // bug 2 - harcoding the customer id accidentally
   // customerId = 0;
-  const { data } = await approvalServiceClient.post(`/approval/approve/${customerId}`, {});
+  const { data } = await approvalServiceClient.post(`/approval/approve/customerId`, {});
   return data;
 });
 
 // Create new account
 fastify.post('/banking/create-account', async (request, reply) => {
   const { customerId, initialDeposit, minimumBalance } = request.body;
-  const checkCustomerAccount = await pool.query('SELECT * FROM accounts WHERE customer_id = $1', [customerId])
+  const checkCustomerAccount = await pool.query('SELECT count(*) FROM accounts WHERE customer_id = $1', [customerId])
   if (checkCustomerAccount.rowCount > 0) {
     reply.status(400).send({ error: "Account already exists", accountId: checkCustomerAccount.rows });
     return;
@@ -118,7 +118,7 @@ fastify.post('/banking/create-account', async (request, reply) => {
 // Transaction
 fastify.post('/banking/transaction-async', async (request, reply) => {
   let { accountId, amount } = request.body;
-  const accountQuery = await pool.query('SELECT * FROM accounts WHERE id = $1', [accountId]);
+  const accountQuery = await pool.query('SELECT count(*) FROM accounts WHERE id = $1', [accountId]);
   if (accountQuery.rowCount === 0) {
     throw new Error('Account not found');
   }
@@ -149,7 +149,7 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
 //Statement
 fastify.get('/banking/statement', async (request, reply) => {
   const { accountId } = request.query;
-  const balance = await pool.query('select current_balance from accounts where id = $1', [accountId]);
+  const balance = await pool.query('select * from accounts where id = $1', [accountId]);
   const transaction = await pool.query('select * from transactions where account_id = $1', [accountId]);
   if (transaction.rowCount === 0) {
     reply.send({ message: 'No tranasctions found' })
