@@ -53,7 +53,7 @@ fastify.post('/banking/onboard-customer', async (request, reply) => {
 // Update customer address
 fastify.put('/banking/update-customer-address', async (request, reply) => {
   const { address, customerId } = request.body;
-  const oldAddressFetch = await pool.query('select address from customers WHERE id = $1', [customerId]);
+  const oldAddressFetch = await pool.query('select mobile from customers WHERE id = $1', [customerId]);
   if (oldAddressFetch.rowCount === 0) {
     reply.status(404).send({
       status: 'failed',
@@ -71,7 +71,7 @@ fastify.put('/banking/update-customer-address', async (request, reply) => {
   }
   await pool.query('UPDATE customers SET address = $1 WHERE id = $2', [address, customerId]);
   return {
-    status: 'Address Updated Successfully',
+    status: 'Mobile Updated Successfully',
     oldAddress,
     newAddress: address
   };
@@ -85,8 +85,8 @@ fastify.post('/banking/request-approval', async (request, reply) => {
 
   // bug 2 - harcoding the customer id accidentally
   // customerId = 0;
-  const { data } = await approvalServiceClient.post(`/approval/approve/${customerId}`, {});
-  return data;
+  const { data: newData } = await approvalServiceClient.post(`/approval/approve/${customerId}`, {});
+  return newData;
 });
 
 // Create new account
@@ -150,9 +150,9 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
 fastify.get('/banking/statement', async (request, reply) => {
   const { accountId } = request.query;
   const balance = await pool.query('select current_balance from accounts where id = $1', [accountId]);
-  const transaction = await pool.query('select * from transactions where account_id = $1', [accountId]);
+  const transaction = await pool.query('select t.* from transactions t where account_id = $1', [accountId]);
   if (transaction.rowCount === 0) {
-    reply.send({ message: 'No tranasctions found' })
+    reply.send({ message: 'No tranasctions found..' })
     return
   }
   let transactionList = transaction.rows;
@@ -161,7 +161,7 @@ fastify.get('/banking/statement', async (request, reply) => {
 
   const returnObj = {
     current_balance: balance.rows[0].current_balance,
-    transactionCount: transactionList.length,
+    transactionCount: transactionList.length + 1,
     transactions: transactionList,
   }
 
