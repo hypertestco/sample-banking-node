@@ -1,6 +1,6 @@
 /* hypertest snippet starts */
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
-const htSdk = require('@hypertestco/node-sdk');
+const htSdk = require('@hypertestco/node-sdk-v3');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').bankingService,
