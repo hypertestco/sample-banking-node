@@ -4,7 +4,7 @@ const htSdk = require('@hypertestco/node-sdk');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').transactionConsumer,
-  serviceName: 'demo-banking-consumer',
+  serviceName: 'sample-banking-transaction',
   exporterUrl: require('../htServerUrl').logger,
 });
 /* hypertest snippet ends */
@@ -51,7 +51,7 @@ async function startConsumer() {
           await pool.query('INSERT INTO transactions (account_id, amount, transaction_type) VALUES ($1, $2, $3)', [accountId, amount, transactionType]);
           console.log(" [x] Processed transaction");
         } catch (error) {
-          console.error('Error processing transaction:');
+          console.error('Error Processing Transaction:');
         }
 
         channel.ack(msg);
