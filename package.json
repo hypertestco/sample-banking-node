@@ -1,12 +1,12 @@
 {
   "name": "backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "pre-start": "npm run dbSeed && kill-port 12300 12301",
-    "start:banking": "kill-port 12300 && node ./services/banking-service.js",
-    "start:approval": "kill-port 12301 && node ./services/approval-service.js",
-    "start:consumer": "node ./services/transaction-consumer.js",
+    "start:banking": "kill-port 12300 && DEBUG=ht* HT_SDK_DEBUG=true LIVE_CODE_COVERAGE_REFRESH_INTERVAL_IN_SEC=20 nyc node ./services/banking-service.js",
+    "start:approval": "kill-port 12301 && nyc node ./services/approval-service.js",
+    "start:consumer": "nyc node ./services/transaction-consumer.js",
     "start-all": "cross-env HT_MODE=RECORD run-p start:*",
     "start": "run-s pre-start start-all",
     "dbSeed": "docker compose up -d && wait-port 4321 5672 15672 && node dbSeed.js && sleep 10",
@@ -18,28 +18,28 @@
     "test-cov:approval": "nyc npm run test:approval",
     "test-cov:consumer": "nyc npm run test:consumer",
     "htcli-v": "htcli -v",
-    "update-cov:banking": "htcli update-coverage --config-file-path .htConf.banking.js",
+    "update-cov:banking": "htcli update-coverage --skip-git-uncommitted-check --config-file-path .htConf.banking.js",
     "update-cov:approval": "htcli update-coverage --config-file-path .htConf.approval.js",
-    "update-cov:consumer": "htcli update-coverage --config-file-path .htConf.consumer.js"
+    "update-cov:consumer": "htcli update-coverage --config-file-path .htConf.consumer.js",
+    "run-cli-test-v3": "DEBUG=ht* tsx /home/varsha/Projects/autoqa_v2/packages/ht-cli-v3/src/index.ts start-new-ai-test --config-file-path ./htAiTestConf.js"
   },
   "keywords": [],
   "author": "",
   "license": "",
   "dependencies": {
-    "cross-env": "^7.0.3",
     "@faker-js/faker": "^8.4.1",
-    "@hypertestco/node-sdk": "0.2.27",
+    "@hypertestco/node-sdk": "/home/varsha/Projects/autoqa_v3/packages/node-sdk/dist/hypertestco-node-sdk-v3-0.0.1-45-lc-4-local-6.tgz",
     "amqplib": "^0.10.5",
     "axios": "^1.6.2",
+    "cross-env": "^7.0.3",
     "fastify": "^4.24.3",
     "pg": "^8.11.3"
   },
   "devDependencies": {
-    "@hypertestco/ht-cli": "0.2.27",
     "kill-port": "1.6.1",
-    "wait-port": "^1.1.0",
     "nodemon": "^3.0.1",
+    "npm-run-all2": "^7.0.2",
     "nyc": "^15.1.0",
-    "npm-run-all2": "^7.0.2"
+    "wait-port": "^1.1.0"
   }
 }
