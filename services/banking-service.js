@@ -1,6 +1,6 @@
 /* hypertest snippet starts */
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
-const htSdk = require('@hypertestco/node-sdk-v3');
+const htSdk = require('@hypertestco/node-sdk');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').bankingService,
@@ -34,7 +34,7 @@ const pool = new Pool({
 });
 
 function test1() {
-  console.log('test1');
+  console.log('test-1');
 }
 
 // amqp channel
@@ -46,12 +46,12 @@ fastify.get('/banking/test1', async (request, reply) => {
 
 fastify.get('/banking/test2', async (request, reply) => {
   test1();
-  console.log('test2');
+  console.log('test-2');
 });
 
 fastify.get('/banking/test3', async (request, reply) => {
   test1();
-  console.log('test3');
+  console.log('test-3');
 });
 
 // Onboard new customer
