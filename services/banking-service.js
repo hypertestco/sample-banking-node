@@ -33,6 +33,8 @@ const pool = new Pool({
   port: 4321,
 });
 
+console.log('banking service started');
+
 function test1() {
   console.log('test1');
 }
