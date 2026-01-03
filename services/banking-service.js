@@ -198,6 +198,10 @@ async function getCurrentConversionRate() {
   return 100;
 }
 
+fastify.get('/banking/health', (request, reply) => {
+  reply.send({ status: 'ok' });
+});
+
 fastify.get('/banking/currency-coversion', async (request, reply) => {
   let amount = Number(request.query.amount);
   if (isNaN(amount) || amount <= 0) {
