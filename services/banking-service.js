@@ -192,7 +192,6 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
 
-  console.log('Conversion rate fetched:', coversionRate);
   const returnObj = {
     amount,
     coversionRate,
