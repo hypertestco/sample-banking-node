@@ -1,0 +1,58 @@
+name: Run HyperTest on PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened] # Runs when PR is opened or updated
+    branches:
+      - main  # Or whichever target branch you protect
+
+jobs:
+  hypertest-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install HyperTest CLI
+        run: npm install @hypertestco/ht-cli-v3@develop --save-exact
+
+      - name: Create HyperTest Config
+        env:
+          HT_CLI_TOKEN: ${{ secrets.HT_CLI_TOKEN ||  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyIiwiaWF0IjoxNzY5MTcxNDA1LCJleHAiOjIwMjgzNzE0MDV9.L_TiHP6ZarjPv2UlBjiMGBcoZjdNUB7A7Ekzf3C5Uqc'}}
+          HT_SERVICE_ID: ${{ secrets.HT_SERVICE_ID || 'c75975f7-1c5f-44fd-b607-3955a01338a2'}}
+          HT_BASE_URL: ${{ secrets.HT_BASE_URL || 'https://v3-app.hypertest.co' }}
+          # github.head_ref is the source branch name for Pull Requests
+          HT_TEST_BRANCH: ${{ github.head_ref }} 
+        run: |
+          cat <<EOF > .htConf.js
+          process.env.HT_CLI_REFRESH_TOKEN = "$HT_CLI_TOKEN";
+
+          const requestTypes = {
+            HTTP: 'HTTP',
+            GRAPHQL: 'GRAPHQL', 
+            KAFKA: 'KAFKA', 
+            GRPC: 'GRPC', 
+            AMQP: 'AMQP', 
+            MANUAL: 'MANUAL'
+          };
+
+          module.exports = {
+            htBackendBaseUrl: '$HT_BASE_URL', 
+            serviceIdentifier: '$HT_SERVICE_ID',
+            requestTypesToTest: [requestTypes.HTTP], 
+            htExtraHeaders: {
+              authorization: 'Basic ' + Buffer.from('HyperTest-Demo:HyperTest-Demo').toString('base64'),
+            },
+            // Use the environment variable we set above
+            testBranch: "$HT_TEST_BRANCH" 
+          };
+          EOF
+
+      - name: Run HyperTest
+        run: npx htcli start-new-test --config-file-path ./.htConf.js
