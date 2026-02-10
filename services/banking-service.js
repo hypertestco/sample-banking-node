@@ -1,6 +1,6 @@
 /* hypertest snippet starts */
 process.env.HT_MODE = process.env.HT_MODE || 'RECORD';
-const htSdk = require('@hypertestco/node-sdk');
+const htSdk = require('@hypertestco/node-sdk-v3');
 htSdk.initialize({
   apiKey: 'DEMO-API-KEY',
   serviceId: require('../service-identifiers').bankingService,
@@ -33,8 +33,26 @@ const pool = new Pool({
   port: 4321,
 });
 
+function test1() {
+  console.log('test1');
+}
+
 // amqp channel
 let channel;
+
+fastify.get('/banking/test1', async (request, reply) => {
+  test1();
+});
+
+fastify.get('/banking/test2', async (request, reply) => {
+  test1();
+  console.log('test2');
+});
+
+fastify.get('/banking/test3', async (request, reply) => {
+  test1();
+  console.log('test3');
+});
 
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
@@ -124,7 +142,7 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
   }
   const account = accountQuery.rows[0];
 
-  if(amount === 0) {
+  if (amount === 0) {
     throw new Error('Amount cannot be zero');
   }
 
