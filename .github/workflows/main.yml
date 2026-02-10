@@ -20,7 +20,7 @@ jobs:
           node-version: '20'
 
       - name: Install HyperTest CLI
-        run: npm install @hypertestco/ht-cli-v3@develop --save-exact
+        run: npm install -g @hypertestco/ht-cli-v3@develop
 
       - name: Create HyperTest Config
         env:
@@ -55,4 +55,4 @@ jobs:
           EOF
 
       - name: Run HyperTest
-        run: npx htcli start-new-test --config-file-path ./.htConf.js
+        run: htcli start-new-test --config-file-path ./.htConf.js
