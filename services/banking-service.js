@@ -111,7 +111,7 @@ fastify.post('/banking/request-approval', async (request, reply) => {
 fastify.post('/banking/create-account', async (request, reply) => {
   const { customerId, initialDeposit, minimumBalance } = request.body;
   const checkCustomerAccount = await pool.query('SELECT count(*) FROM accounts WHERE customer_id = $1', [customerId])
-  if (checkCustomerAccount.rowCount > 0) {
+  if (checkCustomerAccount.rowCount == 0) {
     reply.status(400).send({ error: "Account already exists", accountId: checkCustomerAccount.rows });
     return;
   }
