@@ -54,6 +54,30 @@ fastify.get('/banking/test3', async (request, reply) => {
   console.log('test3');
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
   const { name, address, mobile, ...rest } = request.body;
