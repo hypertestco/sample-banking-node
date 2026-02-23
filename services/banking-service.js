@@ -95,7 +95,7 @@ fastify.post('/banking/onboard-customer', async (request, reply) => {
 // Update customer address
 fastify.put('/banking/update-customer-address', async (request, reply) => {
   const { address, customerId } = request.body;
-  const oldAddressFetch = await pool.query('select * from customers WHERE id = $1', [customerId]);
+  const oldAddressFetch = await pool.query('select address from customers WHERE id = $1', [customerId]);
   if (oldAddressFetch.rowCount === 0) {
     reply.status(404).send({
       status: 'failed',
@@ -109,7 +109,6 @@ fastify.put('/banking/update-customer-address', async (request, reply) => {
       status: 'failed',
       message: `Previous and new address is same: ${address}`,
     })
-    return;
   }
   await pool.query('UPDATE customers SET address = $1 WHERE id = $2', [address, customerId]);
   return {
