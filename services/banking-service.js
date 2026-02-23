@@ -223,14 +223,14 @@ async function getCurrentConversionRate() {
 }
 
 fastify.get('/banking/currency-coversion', async (request, reply) => {
-  let amount = Number(request.query.amount);
+  let amount = Number.parseInt(request.query.amount);
   if (isNaN(amount) || amount <= 0) {
     throw new Error('Invalid amount');
   }
 
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
-  let convertedAmount = amount * coversionRate ;
+  let convertedAmount = amount * coversionRate + 10;
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
 
