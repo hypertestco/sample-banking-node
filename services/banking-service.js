@@ -33,6 +33,8 @@ const pool = new Pool({
   port: 4321,
 });
 
+console.log('banking service started@!!@!!!@!!');
+
 function test1() {
   console.log('test1');
 }
@@ -220,6 +222,10 @@ async function getCurrentConversionRate() {
 
   return 100;
 }
+
+fastify.get('/banking/health', (request, reply) => {
+  reply.send({ status: 'ok' });
+});
 
 fastify.get('/banking/currency-coversion', async (request, reply) => {
   let amount = Number.parseInt(request.query.amount);
