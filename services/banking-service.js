@@ -236,7 +236,7 @@ const start = async () => {
     await fastify.listen({ port: 12300, host: 'localhost' });
     /* hypertest snippet starts */
     htSdk.markAppAsReady();
-    /* hypertest snippet ends here*/
+    /* hypertest snippet ends */
     fastify.log.info(`Server listening on ${fastify.server.address().port}`);
   } catch (err) /* istanbul ignore next */ {
     fastify.log.error(err);
