@@ -58,7 +58,7 @@ fastify.get('/banking/test3', async (request, reply) => {
 
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
-  const { name, address, mobile } = request.body;
+  const { name, address, mobile } = request?.body;
   if (name.length < 3 || address.length < 5 || mobile.length < 10) {
     throw new Error('please fill required field correctly')
   }
