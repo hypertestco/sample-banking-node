@@ -10,6 +10,10 @@ htSdk.initialize({
 /* hypertest snippet ends */
 
 
+
+
+// comment added
+
 const approvalServiceBaseUrl = 'http://localhost:12301';
 
 const amqp = require('amqplib');
