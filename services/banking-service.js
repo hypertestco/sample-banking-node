@@ -7,7 +7,7 @@ htSdk.initialize({
   serviceName: 'demo-banking-service-node',
   exporterUrl: require('../htServerUrl').logger,
 });
-/* hypertest snippet ends here */
+/* hypertest snippet ends */
 
 
 const approvalServiceBaseUrl = 'http://localhost:12301';
