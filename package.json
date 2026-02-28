@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "pre-start": "npm run dbSeed && kill-port 12300 12301",
-    "start:banking": "kill-port 12300 && HT_SDK_DEBUG=true nyc node ./services/banking-service.js",
+    "start:banking": "kill-port 12300 && LIVE_CODE_COVERAGE_REFRESH_INTERVAL_IN_SEC=20 DEBUG=ht* HT_SDK_DEBUG=true nyc node ./services/banking-service.js",
     "start:approval": "kill-port 12301 && nyc node ./services/approval-service.js",
     "start:consumer": "nyc node ./services/transaction-consumer.js",
     "start-all": "cross-env HT_MODE=RECORD run-p start:*",
@@ -28,7 +28,7 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "@faker-js/faker": "^8.4.1",
-    "@hypertestco/node-sdk-v3": "0.0.1-33",
+    "@hypertestco/node-sdk-v3": "0.0.1-77",
     "amqplib": "^0.10.5",
     "axios": "^1.6.2",
     "fastify": "^4.24.3",
