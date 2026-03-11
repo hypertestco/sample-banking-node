@@ -33,6 +33,8 @@ const pool = new Pool({
   port: 4321,
 });
 
+console.log('banking service started@!!@!!!@!!');
+
 function test1() {
   console.log('test1');
 }
@@ -54,9 +56,33 @@ fastify.get('/banking/test3', async (request, reply) => {
   console.log('test3');
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Onboard new customer
 fastify.post('/banking/onboard-customer', async (request, reply) => {
-  const { name, address, mobile } = request.body;
+  const { name, address, mobile, ...rest } = request.body;
   if (name.length < 3 || address.length < 5 || mobile.length < 10) {
     throw new Error('please fill required field correctly')
   }
@@ -85,7 +111,6 @@ fastify.put('/banking/update-customer-address', async (request, reply) => {
       status: 'failed',
       message: `Previous and new address is same: ${address}`,
     })
-    return;
   }
   await pool.query('UPDATE customers SET address = $1 WHERE id = $2', [address, customerId]);
   return {
@@ -103,15 +128,15 @@ fastify.post('/banking/request-approval', async (request, reply) => {
 
   // bug 2 - harcoding the customer id accidentally
   // customerId = 0;
-  const { data } = await approvalServiceClient.post(`/approval/approve/${customerId}`, {});
+  const { data } = await approvalServiceClient.post(`/approval/approve/customerId`, {});
   return data;
 });
 
 // Create new account
 fastify.post('/banking/create-account', async (request, reply) => {
   const { customerId, initialDeposit, minimumBalance } = request.body;
-  const checkCustomerAccount = await pool.query('SELECT * FROM accounts WHERE customer_id = $1', [customerId])
-  if (checkCustomerAccount.rowCount > 0) {
+  const checkCustomerAccount = await pool.query('SELECT count(*) FROM accounts WHERE customer_id = $1', [customerId])
+  if (checkCustomerAccount.rowCount == 0) {
     reply.status(400).send({ error: "Account already exists", accountId: checkCustomerAccount.rows });
     return;
   }
@@ -136,7 +161,7 @@ fastify.post('/banking/create-account', async (request, reply) => {
 // Transaction
 fastify.post('/banking/transaction-async', async (request, reply) => {
   let { accountId, amount } = request.body;
-  const accountQuery = await pool.query('SELECT * FROM accounts WHERE id = $1', [accountId]);
+  const accountQuery = await pool.query('SELECT count(*) FROM accounts WHERE id = $1', [accountId]);
   if (accountQuery.rowCount === 0) {
     throw new Error('Account not found');
   }
@@ -170,7 +195,7 @@ fastify.get('/banking/statement', async (request, reply) => {
   const balance = await pool.query('select current_balance from accounts where id = $1', [accountId]);
   const transaction = await pool.query('select * from transactions where account_id = $1', [accountId]);
   if (transaction.rowCount === 0) {
-    reply.send({ message: 'No tranasctions found' })
+    reply.code(404).send({ message: 'No tranasctions found' })
     return
   }
   let transactionList = transaction.rows;
@@ -198,16 +223,19 @@ async function getCurrentConversionRate() {
   return 100;
 }
 
+fastify.get('/banking/health', (request, reply) => {
+  reply.send({ status: 'ok' });
+});
+
 fastify.get('/banking/currency-coversion', async (request, reply) => {
-  let amount = Number(request.query.amount);
+  let amount = Number.parseInt(request.query.amount);
   if (isNaN(amount) || amount <= 0) {
     throw new Error('Invalid amount');
   }
 
   // making an outbount call for no reason
   const coversionRate = await getCurrentConversionRate();
-  let convertedAmount = amount * coversionRate;
-
+  let convertedAmount = amount * coversionRate + 10;
   // bug 5 - return wrong amount
   // convertedAmount = amount + coversionRate;
 
@@ -215,6 +243,7 @@ fastify.get('/banking/currency-coversion', async (request, reply) => {
     amount,
     coversionRate,
     convertedAmount,
+    msg: 'Conversion rate is dynamic and fetched from a third party api',
   }
 
   reply.send(returnObj);
