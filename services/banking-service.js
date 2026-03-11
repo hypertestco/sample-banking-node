@@ -192,10 +192,10 @@ fastify.post('/banking/transaction-async', async (request, reply) => {
 //Statement
 fastify.get('/banking/statement', async (request, reply) => {
   const { accountId } = request.query;
-  const balance = await pool.query('select * from accounts where id = $1', [accountId]);
+  const balance = await pool.query('select current_balance from accounts where id = $1', [accountId]);
   const transaction = await pool.query('select * from transactions where account_id = $1', [accountId]);
   if (transaction.rowCount === 0) {
-    reply.send({ message: 'No tranasctions found' })
+    reply.code(404).send({ message: 'No tranasctions found' })
     return
   }
   let transactionList = transaction.rows;
