@@ -12,8 +12,6 @@ htSdk.initialize({
 
 
 
-
-
 // comment added
 
 const approvalServiceBaseUrl = 'http://localhost:12301';
